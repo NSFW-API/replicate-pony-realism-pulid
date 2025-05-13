@@ -1,0 +1,168 @@
+{
+  "1": {
+    "inputs": {
+      "model": "hunyuan_video_720_fp8_e4m3fn.safetensors",
+      "base_precision": "bf16",
+      "quantization": "fp8_e4m3fn",
+      "load_device": "offload_device",
+      "attention_mode": "sdpa",
+      "auto_cpu_offload": false,
+      "lora": [
+        "43",
+        0
+      ]
+    },
+    "class_type": "HyVideoModelLoader",
+    "_meta": {
+      "title": "HunyuanVideo Model Loader"
+    }
+  },
+  "3": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "num_frames": 33,
+      "steps": 50,
+      "embedded_guidance_scale": 6,
+      "flow_shift": 9,
+      "seed": 845126481427684,
+      "force_offload": 1,
+      "denoise_strength": 1,
+      "scheduler": "DPMSolverMultistepScheduler",
+      "model": [
+        "1",
+        0
+      ],
+      "hyvid_embeds": [
+        "30",
+        0
+      ],
+      "feta_args": [
+        "42",
+        0
+      ]
+    },
+    "class_type": "HyVideoSampler",
+    "_meta": {
+      "title": "HunyuanVideo Sampler"
+    }
+  },
+  "5": {
+    "inputs": {
+      "enable_vae_tiling": true,
+      "temporal_tiling_sample_size": 64,
+      "spatial_tile_sample_min_size": 256,
+      "auto_tile_size": true,
+      "vae": [
+        "7",
+        0
+      ],
+      "samples": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "HyVideoDecode",
+    "_meta": {
+      "title": "HunyuanVideo Decode"
+    }
+  },
+  "7": {
+    "inputs": {
+      "model_name": "hunyuan_video_vae_bf16.safetensors",
+      "precision": "bf16"
+    },
+    "class_type": "HyVideoVAELoader",
+    "_meta": {
+      "title": "HunyuanVideo VAE Loader"
+    }
+  },
+  "16": {
+    "inputs": {
+      "llm_model": "Kijai/llava-llama-3-8b-text-encoder-tokenizer",
+      "clip_model": "openai/clip-vit-large-patch14",
+      "precision": "fp16",
+      "apply_final_norm": false,
+      "hidden_state_skip_layer": 2,
+      "quantization": "disabled"
+    },
+    "class_type": "DownloadAndLoadHyVideoTextEncoder",
+    "_meta": {
+      "title": "(Down)Load HunyuanVideo TextEncoder"
+    }
+  },
+  "30": {
+    "inputs": {
+      "prompt": "In the style of CYB77, riding a motorbike in first person view through a cyberpunk city at night",
+      "force_offload": "bad quality video",
+      "prompt_template": "video",
+      "text_encoders": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "HyVideoTextEncode",
+    "_meta": {
+      "title": "HunyuanVideo TextEncode"
+    }
+  },
+  "34": {
+    "inputs": {
+      "frame_rate": 15,
+      "loop_count": 0,
+      "filename_prefix": "HunyuanVideo",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 2,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "41": {
+    "inputs": {
+      "lora": "hunyuan-cyberpunk-mod.safetensors",
+      "strength": 1
+    },
+    "class_type": "HyVideoLoraSelect",
+    "_meta": {
+      "title": "HunyuanVideo Lora Select (1)"
+    }
+  },
+  "42": {
+    "inputs": {
+      "weight": 0.5,
+      "single_blocks": true,
+      "double_blocks": true,
+      "start_percent": 0,
+      "end_percent": 1
+    },
+    "class_type": "HyVideoEnhanceAVideo",
+    "_meta": {
+      "title": "HunyuanVideo Enhance A Video"
+    }
+  },
+  "43": {
+    "inputs": {
+      "lora": "",
+      "strength": 1,
+      "prev_lora": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "HyVideoLoraSelect",
+    "_meta": {
+      "title": "HunyuanVideo Lora Select (2)"
+    }
+  }
+}

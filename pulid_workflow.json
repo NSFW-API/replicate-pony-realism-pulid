@@ -1,0 +1,167 @@
+{
+  "3": {
+    "inputs": {
+      "vae_name": "sdxl_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "4": {
+    "inputs": {
+      "text": "A woman on her knees on a bed, wearing pink sweatpants and a purple hoodie, facing the camera smiling",
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "7": {
+    "inputs": {
+      "seed": 569737278829342,
+      "steps": 30,
+      "cfg": 3.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "10",
+        0
+      ],
+      "positive": [
+        "15",
+        0
+      ],
+      "negative": [
+        "16",
+        0
+      ],
+      "latent_image": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "7",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "10": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "pony_realism_23.safetensors"
+    },
+    "_meta": {
+      "title": "Load PonyRealism SDXL"
+    }
+  },
+  "11": {
+    "inputs": {
+      "clip_name": "t5xxl_fp16.safetensors",
+      "type": "stable_diffusion",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "14": {
+    "class_type": "PulidModelLoader",
+    "inputs": {
+      "pulid_name": "ip-adapter_pulid_sdxl_fp16.safetensors",
+      "method": "fidelity",
+      "image": ["17", 0]
+    },
+    "_meta": {
+      "title": "PuLID Loader"
+    }
+  },
+  "15": {
+    "class_type": "ApplyPulid",
+    "inputs": {
+      "pulid": ["14", 0],
+      "clip": ["4", 0]
+    },
+    "_meta": {
+      "title": "PuLID Apply (Positive)"
+    }
+  },
+  "16": {
+    "class_type": "ApplyPulid",
+    "inputs": {
+      "pulid": ["14", 0],
+      "clip": ["5", 0]
+    },
+    "_meta": {
+      "title": "PuLID Apply (Negative)"
+    }
+  },
+  "17": {
+    "class_type": "ImageLoad",
+    "inputs": {
+      "image": "reference.png"
+    },
+    "_meta": {
+      "title": "Load reference face"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+[submodule "ComfyUI"]
+	path = ComfyUI
+	url = https://github.com/comfyanonymous/ComfyUI.git
+	commit = 4c82741b545c6cedcfa397034f56ce1377b3675a
+[submodule "musubi-tuner"]
+	path = musubi-tuner
+	url = git@github.com:zsxkib/musubi-tuner.git
