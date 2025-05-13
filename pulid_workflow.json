@@ -156,7 +156,7 @@
     }
   },
   "17": {
-    "class_type": "ImageLoad",
+    "class_type": "LoadImage",
     "inputs": {
       "image": "reference.png"
     },
