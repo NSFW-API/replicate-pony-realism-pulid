@@ -184,6 +184,12 @@ class Predictor(BasePredictor):
                 choices=["fidelity", "style", "both"],
                 description="PuLID method to use: fidelity for face swapping, style for style transfer, both for a mix.",
             ),
+            face_weight: float = Input(
+                default=0.8,
+                ge=0.0,
+                le=1.0,
+                description="Weight of the face adaptation effect (0.0 to 1.0)",
+            ),
     ) -> List[Path]:
 
         # 1. housekeeping
@@ -234,8 +240,10 @@ class Predictor(BasePredictor):
         sampler_inputs["denoise"] = 1.0
 
         # ----- PuLID settings ----------------------------------------------
-        if str(14) in by_id:
-            node(14)["inputs"]["method"] = method
+        # Update the ApplyPulid node with the user's method and weight
+        if str(15) in by_id:
+            node(15)["inputs"]["method"] = method
+            node(15)["inputs"]["weight"] = face_weight
 
         # Make sure the ImageLoad node points to the reference image
         if str(17) in by_id:

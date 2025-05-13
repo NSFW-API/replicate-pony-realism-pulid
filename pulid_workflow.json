@@ -12,8 +12,8 @@
     "inputs": {
       "text": "A woman on her knees on a bed, wearing pink sweatpants and a purple hoodie, facing the camera smiling",
       "clip": [
-        "11",
-        0
+        "10",
+        1
       ]
     },
     "class_type": "CLIPTextEncode",
@@ -25,8 +25,8 @@
     "inputs": {
       "text": "",
       "clip": [
-        "11",
-        0
+        "10",
+        1
       ]
     },
     "class_type": "CLIPTextEncode",
@@ -54,15 +54,15 @@
       "scheduler": "normal",
       "denoise": 1,
       "model": [
-        "10",
-        0
-      ],
-      "positive": [
         "15",
         0
       ],
+      "positive": [
+        "4",
+        0
+      ],
       "negative": [
-        "16",
+        "5",
         0
       ],
       "latent_image": [
@@ -113,23 +113,26 @@
       "title": "Load PonyRealism SDXL"
     }
   },
-  "11": {
-    "inputs": {
-      "clip_name": "t5xxl_fp16.safetensors",
-      "type": "stable_diffusion",
-      "device": "default"
-    },
-    "class_type": "CLIPLoader",
+  "12": {
+    "class_type": "PulidEvaClipLoader",
+    "inputs": {},
     "_meta": {
-      "title": "Load CLIP"
+      "title": "PuLID EVA-CLIP Loader"
+    }
+  },
+  "13": {
+    "class_type": "PulidInsightFaceLoader",
+    "inputs": {
+      "provider": "CPU"
+    },
+    "_meta": {
+      "title": "PuLID InsightFace Loader"
     }
   },
   "14": {
     "class_type": "PulidModelLoader",
     "inputs": {
-      "pulid_name": "ip-adapter_pulid_sdxl_fp16.safetensors",
-      "method": "fidelity",
-      "image": ["17", 0]
+      "pulid_file": "ip-adapter_pulid_sdxl_fp16.safetensors"
     },
     "_meta": {
       "title": "PuLID Loader"
@@ -138,21 +141,33 @@
   "15": {
     "class_type": "ApplyPulid",
     "inputs": {
-      "pulid": ["14", 0],
-      "clip": ["4", 0]
+      "model": [
+        "10",
+        0
+      ],
+      "pulid": [
+        "14",
+        0
+      ],
+      "eva_clip": [
+        "12",
+        0
+      ],
+      "face_analysis": [
+        "13",
+        0
+      ],
+      "image": [
+        "17",
+        0
+      ],
+      "method": "fidelity",
+      "weight": 0.8,
+      "start_at": 0.0,
+      "end_at": 1.0
     },
     "_meta": {
-      "title": "PuLID Apply (Positive)"
-    }
-  },
-  "16": {
-    "class_type": "ApplyPulid",
-    "inputs": {
-      "pulid": ["14", 0],
-      "clip": ["5", 0]
-    },
-    "_meta": {
-      "title": "PuLID Apply (Negative)"
+      "title": "Apply PuLID"
     }
   },
   "17": {
